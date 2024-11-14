@@ -26,11 +26,11 @@ export const UpsertTransaction = async (params: AddTransactionParams) => {
     throw new Error("User is not authenticated");
   }
   await db.transaction.upsert({
-    where: {
-      id: params.id,
-    },
     update: { ...params, userId },
     create: { ...params, userId },
+    where: {
+      id: params.id ?? "",
+    },
   });
 
   revalidatePath("/transactions");
